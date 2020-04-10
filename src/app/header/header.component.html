@@ -1,0 +1,88 @@
+<nav
+  class="navbar is-dark"
+  style="
+    background-image: url('https://i.pinimg.com/originals/ea/3f/d3/ea3fd3102ccf575e3c33954f73eab78d.jpg');
+  "
+  role="navigation"
+  aria-label="main navigation"
+>
+  <div class="navbar-brand">
+    <a class="navbar-item">
+      <p>VGC</p>
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger burger"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="navbarBasicExample"
+      #burger
+      (click)="onBurgerClick()"
+      [ngClass]="{ 'is-active': toggleActive == true }"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div
+    id="navbarBasicExample"
+    class="navbar-menu"
+    [ngClass]="{ 'is-active': toggleActive == true }"
+  >
+    <div class="navbar-start">
+      <a class="navbar-item" routerLink="home">
+        Home
+      </a>
+
+      <a *ngIf="logedIn" class="navbar-item" routerLink="profile">
+        My Profile
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Library
+        </a>
+
+        <div class="navbar-dropdown is-black">
+          <a class="navbar-item">
+            My Collection
+          </a>
+          <a class="navbar-item">
+            Browse Games
+          </a>
+          <a class="navbar-item">
+            Add Manually
+          </a>
+          <hr class="navbar-divider" />
+          <a class="navbar-item">
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons" *ngIf="!logedIn">
+          <a class="button is-danger" routerLink="signup">
+            Sign Up
+          </a>
+          <a class="button is-danger" routerLink="signin">
+            Sign In
+          </a>
+        </div>
+        <div class="buttons" *ngIf="logedIn">
+          <p class="navbar-item" *ngIf="!toggleActive" style="color: white;">
+            Welcome, {{ email }}
+          </p>
+          <a class="button is-danger" (click)="onLogout()" routerLink="signin">
+            Log out
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

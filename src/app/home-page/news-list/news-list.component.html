@@ -1,0 +1,12 @@
+<br />
+<div class="columns" *ngFor="let article of news">
+  <div class="column is-full">
+    <a routerLink="{{ article.title }}">
+      <div class="notification is-danger">
+        <div class="columns">
+          <div class="column is-12">{{ article.title }}</div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
