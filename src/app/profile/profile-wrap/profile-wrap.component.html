@@ -17,11 +17,50 @@
           </figure>
         </div>
         <div class="column is-7">
-          <p>{{ currentProfile.email }}</p>
+          <p>E-Mail: {{ currentProfile.email }}</p>
           <br />
-          <p>{{ currentProfile.userName }}</p>
+          <p>
+            User Name:
+            {{
+              currentProfile.userName === ''
+                ? 'Username not set'
+                : currentProfile.userName
+            }}
+          </p>
         </div>
       </div>
     </article>
+  </div>
+</div>
+<div class="columns">
+  <div class="column is-4 is-offset-3 buttons">
+    <button
+      class="button is-danger"
+      [disabled]="changePic || changeUser"
+      (click)="onChangeProfilePic()"
+    >
+      Change Profile Pic
+    </button>
+    <button
+      class="button is-danger"
+      [disabled]="changePic || changeUser"
+      (click)="onChangeUserName()"
+    >
+      Change User Name
+    </button>
+  </div>
+</div>
+<div class="columns" *ngIf="changeUser || changePic">
+  <div class="column is-2 is-offset-3">
+    <input
+      #input
+      class="input"
+      type="text"
+      placeholder="Enter {{ changeUser ? 'UserName' : 'Url' }} here"
+    />
+  </div>
+  <div class="column is-3 buttons">
+    <button class="button is-danger" (click)="onSubmitChanges()">Submit</button>
+    <button class="button is-danger" (click)="onCancelChanges()">Cancel</button>
   </div>
 </div>

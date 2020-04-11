@@ -14,6 +14,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.autoSignIn();
+    if (localStorage.getItem('userData') != null) {
+    }
   }
 
   prepareRoute(outlet: RouterOutlet) {

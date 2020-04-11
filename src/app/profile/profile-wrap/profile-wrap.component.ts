@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProfileService } from 'src/app/shared/services/profile.service';
 import { Profile } from 'src/app/shared/models/profile.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -13,6 +13,10 @@ export class ProfileWrapComponent implements OnInit {
 
   currentProfile: Profile = new Profile('', '', '');
   profiles: Profile[] = [];
+  @ViewChild('input', { static: false }) input: ElementRef;
+
+  changeUser = false;
+  changePic = false;
 
   ngOnInit(): void {
     this.prof.getProfileInfo().subscribe((response) => {
@@ -24,15 +28,12 @@ export class ProfileWrapComponent implements OnInit {
       }
 
       const email = this.auth.email;
-      console.log('1');
       for (const profile of this.profiles) {
         if (profile.email === email) {
-          console.log('2');
           this.currentProfile = profile;
           return;
         }
       }
-      console.log('3');
       this.currentProfile = new Profile(
         email,
         'https://bulma.io/images/placeholders/128x128.png',
@@ -40,5 +41,32 @@ export class ProfileWrapComponent implements OnInit {
       );
       this.prof.createProfileInfo(this.currentProfile);
     });
+  }
+
+  onChangeUserName() {
+    console.log(this.profiles);
+    this.changeUser = true;
+  }
+
+  onChangeProfilePic() {
+    this.changePic = true;
+  }
+
+  onCancelChanges() {
+    console.log(this.input);
+    this.changePic = false;
+    this.changeUser = false;
+  }
+
+  onSubmitChanges() {
+    if (this.changePic) {
+      this.currentProfile.imageUrl = this.input.nativeElement.value;
+    } else {
+      this.currentProfile.userName = this.input.nativeElement.value;
+    }
+    this.changePic = false;
+    this.changeUser = false;
+    console.log(this.profiles);
+    this.prof.changeProfileInfo(this.profiles);
   }
 }

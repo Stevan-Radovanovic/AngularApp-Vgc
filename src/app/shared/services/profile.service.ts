@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Profile } from '../models/profile.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   createProfileInfo(profile: Profile) {
     console.log(profile);
@@ -17,6 +18,14 @@ export class ProfileService {
       )
       .subscribe(() => {
         console.log('Profil kreiran');
+      });
+  }
+
+  changeProfileInfo(profile: Profile[]) {
+    return this.http
+      .put('https://vgc-angular.firebaseio.com/profiles.json', profile)
+      .subscribe(() => {
+        console.log('Profil promenjen');
       });
   }
 
